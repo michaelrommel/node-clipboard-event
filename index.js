@@ -8,9 +8,14 @@ class ClipboardEventListener extends EventEmitter {
     this.child = null;
   }
 
-  startListening() {
+  startListening(target) {
 
-    const { platform } = process;
+    let platform;
+    if (target) {
+      platform = target;
+    } else {
+      platform = process.platform;
+    };
     if (platform === 'win32') {
       this.child = execFile(path.join(__dirname, 'platform/clipboard-event-handler-win32.exe'));
     }
